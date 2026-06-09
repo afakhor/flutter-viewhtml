@@ -1,0 +1,40 @@
+name: Preview UI via GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Kode
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0'
+          channel: 'stable'
+
+      - name: Clean Flutter Cache
+        run: flutter clean
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      # Di sini tanda kutipnya sudah dirapikan dan ditambahkan renderer html langsung
+      - name: Build Web
+        run: flutter build web --release --base-href "/blajar-fultter/" --web-renderer html
+
+      - name: Deploy ke Branch gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build/web
+          branch: gh-pages
