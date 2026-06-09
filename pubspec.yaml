@@ -1,4 +1,4 @@
-name: preview ui from github
+name: "preview ui from github" 
 description: "flutter check and recheck" 
 publish_to: 'none'
 version: 1.0.0+1
