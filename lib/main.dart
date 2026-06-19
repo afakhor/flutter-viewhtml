@@ -1,6 +1,6 @@
 // 1. Package Imports
 import 'dart:async';
-import 'package:flutter/material';
+import 'package:flutter/material.dart';
 
 // 2. The Main Function Entry Point
 void main() {
