@@ -92,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           // Background Gambar Asli (Sudah Rapi Full Layar)
           Positioned.fill(
             child: Image.asset(
-              'assets/images/bgdt.png', 
+              'assets/images/splash.png', 
               fit: BoxFit.cover,       
             ),
           ),
