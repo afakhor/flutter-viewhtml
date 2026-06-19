@@ -1,26 +1,54 @@
-// 1. Package Imports (Sudah diperbaiki dengan menambahkan .dart)
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-// 2. The Main Function Entry Point
 void main() {
+  // =========================================================
+  // PASUKAN PENGAMAN: Menangkap error UI agar tidak BLANK PUTIH
+  // =========================================================
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+  };
+
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.black,
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Text(
+                '⚠️ KODE CRASH / ERROR DETECTED:\n\n${details.exception}\n\nLacak Baris Script:\n${details.stack}',
+                style: const TextStyle(
+                  color: Colors.redAccent, 
+                  fontFamily: 'monospace', 
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  };
+
   runApp(const MyApp());
 }
 
-// 3. The Root Widget Definition
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      debugShowCheckedModeBanner: false, 
+      debugShowCheckedModeBanner: false,
       home: SplashScreen(), 
     );
   }
 }
 
-// 4. Widget Halaman Splash Screen Beranimasi
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -52,9 +80,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        setState(() {
-          _isAtCenter = true;
-        });
+        if (mounted) {
+          setState(() {
+            _isAtCenter = true;
+          });
+        }
 
         Timer(const Duration(milliseconds: 1500), () {
           if (mounted) {
@@ -79,7 +109,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF7F00FF), 
       appBar: AppBar(
         backgroundColor: const Color(0xFF7F00FF),
         elevation: 0,
@@ -91,15 +121,27 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       ),
       body: Stack(
         children: [
-          // 1. Background Gambar Full Layar (Menghilangkan sisa layar putih)
+          // Background Gambar Aman dengan Handler Error
           Positioned.fill(
             child: Image.asset(
               'assets/images/bgdt.png', 
               fit: BoxFit.cover,       
+              errorBuilder: (context, error, stackTrace) {
+                // Jika gambar gagal dimuat, dia tidak akan bikin blank, tapi memunculkan teks ini
+                return Container(
+                  color: const Color(0xFF7F00FF),
+                  child: const Center(
+                    child: Text(
+                      'Format / File gambar bgdt.png tidak ditemukan di server.',
+                      style: TextStyle(color: Colors.white, fontSize: 14),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
 
-          // 2. Animasi Alat & Jari (Column tinggi 220 sebelumnya sudah dihapus)
+          // Animasi Komponen Alat & Jari
           AnimatedBuilder(
             animation: _alignmentAnimation,
             builder: (context, child) {
@@ -131,7 +173,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   }
 }
 
-// 5. Tempat Sementara untuk Halaman Utama setelah Splash Screen
 class HomeShellPlaceholder extends StatelessWidget {
   const HomeShellPlaceholder({super.key});
 
