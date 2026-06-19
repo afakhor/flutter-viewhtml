@@ -1,6 +1,6 @@
 // 1. Package Imports
 import 'dart:async';
-import 'package:flutter/material.dart';
+import 'package:flutter/material';
 
 // 2. The Main Function Entry Point
 void main() {
@@ -96,13 +96,18 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-      child: Image.asset(
-        'assets/images/bgdt.png', // Ganti ke 'assets/images/splash.png' jika nama filenya berubah
-        fit: BoxFit.cover,       // Memastikan gambar menutup seluruh layar dengan rapi
-      ),
-    ),
-
+          Column(
+            children: [
+              Container(
+                height: 220,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/bgdt.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
             ],
           ),
 
