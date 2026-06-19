@@ -1,42 +1,10 @@
-// 1. Package Imports (UTUH)
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-// 2. Main Function dengan Pengaman Layar Blank
 void main() {
-  FlutterError.onError = (FlutterErrorDetails details) {
-    FlutterError.presentError(details);
-  };
-
-  ErrorWidget.builder = (FlutterErrorDetails details) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.black,
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Center(
-            child: SingleChildScrollView(
-              child: Text(
-                '⚠️ KODE CRASH DETECTED:\n\n${details.exception}',
-                style: const TextStyle(
-                  color: Colors.redAccent, 
-                  fontFamily: 'monospace', 
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  };
-
   runApp(const MyApp());
 }
 
-// 3. Root Aplikasi
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -49,7 +17,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// 4. Halaman Splash Screen
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -122,26 +89,15 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       ),
       body: Stack(
         children: [
-          // Background Gambar Full Layar (Aman dari Crash)
+          // 1. Background Gambar Full Layar (Bersih & Rapi)
           Positioned.fill(
             child: Image.asset(
-              'assets/images/splash.png', 
+              'assets/images/bgdt.png', 
               fit: BoxFit.cover,       
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: const Color(0xFF7F00FF),
-                  child: const Center(
-                    child: Text(
-                      'Info: Gambar bgdt.png tidak terbaca di server web.',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  ),
-                );
-              },
             ),
           ),
 
-          // Komponen Animasi Alat & Jari
+          // 2. Komponen Animasi Alat & Jari
           AnimatedBuilder(
             animation: _alignmentAnimation,
             builder: (context, child) {
@@ -173,7 +129,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   }
 }
 
-// 5. Placeholder Halaman Utama
 class HomeShellPlaceholder extends StatelessWidget {
   const HomeShellPlaceholder({super.key});
 
