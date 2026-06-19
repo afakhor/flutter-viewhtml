@@ -96,18 +96,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       ),
       body: Stack(
         children: [
-          Column(
-            children: [
-              Container(
-                height: 220,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/bgdt.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+          Positioned.fill(
+      child: Image.asset(
+        'assets/images/bgdt.png', // Ganti ke 'assets/images/splash.png' jika nama filenya berubah
+        fit: BoxFit.cover,       // Memastikan gambar menutup seluruh layar dengan rapi
+      ),
+    ),
+
             ],
           ),
 
