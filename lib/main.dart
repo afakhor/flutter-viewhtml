@@ -90,12 +90,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       body: Stack(
         children: [
           // 1. Background Gambar Full Layar (Bersih & Rapi)
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/bgdt.png', 
-              fit: BoxFit.cover,       
-            ),
-          ),
+          // Ganti sementara untuk tes apakah layout-nya sudah pas atau belum
+Positioned.fill(
+  child: Image.network(
+    'https://picsum.photos/1080/1920', // Mengambil gambar random dari internet
+    fit: BoxFit.cover,       
+  ),
+),
+
 
           // 2. Komponen Animasi Alat & Jari
           AnimatedBuilder(
