@@ -89,19 +89,15 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       ),
       body: Stack(
         children: [
+          // Background Gambar Asli (Sudah Rapi Full Layar)
           Positioned.fill(
-            child: Container(
-              color: Colors.amber, // Layar HARUS berubah jadi kuning/oranye jika berhasil
-              child: const Center(
-                child: Text(
-                  'KODE BARU SUKSES LIVE!',
-                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
+            child: Image.asset(
+              'assets/images/bgdt.png', 
+              fit: BoxFit.cover,       
             ),
           ),
 
-          // 2. Komponen Animasi Alat & Jari
+          // Komponen Animasi Alat & Jari
           AnimatedBuilder(
             animation: _alignmentAnimation,
             builder: (context, child) {
