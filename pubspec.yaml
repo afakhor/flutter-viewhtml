@@ -28,4 +28,4 @@ flutter:
   # WAJIB: Daftarkan aset gambar kamu di sini
   # ==========================================
   assets:
-    - assets/images/bgdt.png
+    - assets/images/splash.png
