@@ -1,6 +1,6 @@
-// 1. Package Imports
+// 1. Package Imports (Sudah diperbaiki dengan menambahkan .dart)
 import 'dart:async';
-import 'package:flutter/material';
+import 'package:flutter/material.dart';
 
 // 2. The Main Function Entry Point
 void main() {
@@ -14,11 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      debugShowCheckedModeBanner: false, // Menghilangkan pita debug di pojok kanan atas
-      
-      // ==========================================
-      // DI BAGIAN INI: Sudah diubah ke SplashScreen
-      // ==========================================
+      debugShowCheckedModeBanner: false, 
       home: SplashScreen(), 
     );
   }
@@ -62,7 +58,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
         Timer(const Duration(milliseconds: 1500), () {
           if (mounted) {
-            // Setelah splash selesai, aplikasi akan mengarah ke HomeShell kamu
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (_) => const HomeShellPlaceholder()), 
@@ -96,21 +91,15 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       ),
       body: Stack(
         children: [
-          Column(
-            children: [
-              Container(
-                height: 220,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/bgdt.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ],
+          // 1. Background Gambar Full Layar (Menghilangkan sisa layar putih)
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/bgdt.png', 
+              fit: BoxFit.cover,       
+            ),
           ),
 
+          // 2. Animasi Alat & Jari (Column tinggi 220 sebelumnya sudah dihapus)
           AnimatedBuilder(
             animation: _alignmentAnimation,
             builder: (context, child) {
@@ -143,7 +132,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 }
 
 // 5. Tempat Sementara untuk Halaman Utama setelah Splash Screen
-// (Ganti atau arahkan ke class HomeShell utama milikmu yang asli jika sudah siap)
 class HomeShellPlaceholder extends StatelessWidget {
   const HomeShellPlaceholder({super.key});
 
