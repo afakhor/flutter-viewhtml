@@ -1,7 +1,116 @@
+// 1. Package Imports (UTUH)
+import 'dart:async';
+import 'package:flutter/material.dart';
+
+// 2. Main Function dengan Pengaman Layar Blank
+void main() {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+  };
+
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.black,
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Text(
+                '⚠️ KODE CRASH DETECTED:\n\n${details.exception}',
+                style: const TextStyle(
+                  color: Colors.redAccent, 
+                  fontFamily: 'monospace', 
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  };
+
+  runApp(const MyApp());
+}
+
+// 3. Root Aplikasi
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(), 
+    );
+  }
+}
+
+// 4. Halaman Splash Screen
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Alignment> _alignmentAnimation;
+  bool _isAtCenter = false; 
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+
+    _alignmentAnimation = Tween<Alignment>(
+      begin: const Alignment(0, 1.8), 
+      end: const Alignment(0, 0),
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.fastOutSlowIn, 
+    ));
+
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        if (mounted) {
+          setState(() {
+            _isAtCenter = true;
+          });
+        }
+
+        Timer(const Duration(milliseconds: 1500), () {
+          if (mounted) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const HomeShellPlaceholder()), 
+            );
+          }
+        });
+      }
+    });
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF7F00FF), // Default ke ungu jika ada kendala load
+      backgroundColor: const Color(0xFF7F00FF), 
       appBar: AppBar(
         backgroundColor: const Color(0xFF7F00FF),
         elevation: 0,
@@ -13,19 +122,18 @@
       ),
       body: Stack(
         children: [
-          // 1. Background Gambar dengan Pengaman Error
+          // Background Gambar Full Layar (Aman dari Crash)
           Positioned.fill(
             child: Image.asset(
               'assets/images/bgdt.png', 
               fit: BoxFit.cover,       
               errorBuilder: (context, error, stackTrace) {
-                // Jika gambar ga ketemu/gagal load, render warna ungu ini agar tidak BLANK putih
                 return Container(
                   color: const Color(0xFF7F00FF),
                   child: const Center(
                     child: Text(
-                      'Gagal memuat gambar background, periksa aset kamu.',
-                      style: TextStyle(color: Colors.white70, fontSize: 12),
+                      'Info: Gambar bgdt.png tidak terbaca di server web.',
+                      style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   ),
                 );
@@ -33,7 +141,7 @@
             ),
           ),
 
-          // 2. Animasi Alat & Jari
+          // Komponen Animasi Alat & Jari
           AnimatedBuilder(
             animation: _alignmentAnimation,
             builder: (context, child) {
@@ -63,3 +171,17 @@
       ),
     );
   }
+}
+
+// 5. Placeholder Halaman Utama
+class HomeShellPlaceholder extends StatelessWidget {
+  const HomeShellPlaceholder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Katalog Utama')),
+      body: const Center(child: Text('Selamat Datang di Aplikasi Babe Perkakas!')),
+    );
+  }
+}
