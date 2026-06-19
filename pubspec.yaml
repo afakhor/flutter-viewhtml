@@ -1,15 +1,21 @@
-name: preview_ui_from_github
-description: "flutter check and recheck" 
-publish_to: 'none'
+name: babe_perkakas
+description: "Aplikasi Katalog dan Tools - Babe Perkakas"
+
+# Tentukan versi publikasi jika diperlukan
+publish_to: 'none' 
+
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0' # Sesuaikan dengan versi Flutter yang kamu gunakan
 
 dependencies:
   flutter:
     sdk: flutter
-  path_provider: ^2.1.2
+  
+  # Tambahkan dependency lain di sini jika nanti diperlukan (misal: google_fonts, sqflite, dll)
+  cupertino_icons: ^1.0.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -17,4 +23,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets/images/
+
+  # ==========================================
+  # WAJIB: Daftarkan aset gambar kamu di sini
+  # ==========================================
+  assets:
+    - assets/images/bgdt.png
