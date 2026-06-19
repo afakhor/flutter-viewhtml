@@ -125,7 +125,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           // Background Gambar Full Layar (Aman dari Crash)
           Positioned.fill(
             child: Image.asset(
-              'assets/images/bgdt.png', 
+              'assets/images/splash.png', 
               fit: BoxFit.cover,       
               errorBuilder: (context, error, stackTrace) {
                 return Container(
