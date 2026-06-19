@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     _alignmentAnimation = Tween<Alignment>(
       begin: const Alignment(2.2 , 3.2), 
-      end: const Alignment(0.2 , -0.02),
+      end: const Alignment(-0.02 , -0.04),
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.fastOutSlowIn, 
